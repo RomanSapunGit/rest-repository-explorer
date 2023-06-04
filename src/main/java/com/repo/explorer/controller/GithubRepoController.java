@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -21,7 +20,7 @@ public class GithubRepoController {
     }
 
     @GetMapping(value = "/repositories/{username}", produces = {MediaType.APPLICATION_JSON_VALUE, "!" + MediaType.APPLICATION_XML_VALUE})
-    public List<GithubRepositoryDTO> getRepositories(@PathVariable String username) throws ExecutionException, InterruptedException {
+    public List<GithubRepositoryDTO> getRepositories(@PathVariable String username) {
         return githubRepoServiceImpl.getRepositories(username);
     }
 }

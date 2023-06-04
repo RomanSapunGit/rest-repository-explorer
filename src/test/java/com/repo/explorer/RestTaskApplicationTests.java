@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -27,14 +29,14 @@ class RestTaskApplicationTests {
     private static final String GITHUB_USERNAME = "RomanSapunGit";
     private final GithubRepoService githubService;
     private final MockMvc mockMvc;
-    RestTemplate restTemplate;
+    WebClient webClient;
     GithubRepoController githubRepoController;
 
     @Autowired
-    public RestTaskApplicationTests(RestTemplate restTemplate, GithubRepoService githubService,
+    public RestTaskApplicationTests(WebClient webClient, GithubRepoService githubService,
                                     GithubRepoController githubRepoController, MockMvc mockMvc) {
         this.githubRepoController = githubRepoController;
-        this.restTemplate = restTemplate;
+        this.webClient = webClient;
         this.githubService = githubService;
         this.mockMvc = mockMvc;
     }
@@ -44,7 +46,7 @@ class RestTaskApplicationTests {
         List<GithubRepositoryDTO> repositories = githubService.getRepositories("Spring");
 
         for (GithubRepositoryDTO repository : repositories) {
-            assertFalse(repository.isFork());
+            assertFalse(repository.fork());
         }
     }
 
@@ -52,7 +54,7 @@ class RestTaskApplicationTests {
     public void testGetRepositories_UserNotExist() {
         String nonExistingUsername = GITHUB_USERNAME + "12";
 
-        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () ->
+        WebClientResponseException.NotFound exception = assertThrows(WebClientResponseException.NotFound.class, () ->
                 githubService.getRepositories(nonExistingUsername));
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
@@ -65,10 +67,9 @@ class RestTaskApplicationTests {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/repositories/{username}", GITHUB_USERNAME)
                 .header("Accept", acceptHeader);
 
-         mockMvc.perform(requestBuilder)
+        mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isNotAcceptable())
-                 .andExpect(MockMvcResultMatchers.content().json
-                         ("{\"status\": 406, \"message\": \"No acceptable representation\"}"))
-                 .andReturn();
+                .andExpect(MockMvcResultMatchers.content().json("{\"status\": 406, \"message\": \"No acceptable representation\"}"))
+                .andReturn();
     }
 }
