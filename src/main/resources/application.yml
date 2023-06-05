@@ -5,4 +5,4 @@ logging:
   level:
    org:
     springframework:
-     web: TRACE
+     web: ${LOG_CONFIGURATION}

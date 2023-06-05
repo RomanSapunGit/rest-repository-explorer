@@ -1,6 +1,6 @@
 package com.repo.explorer.util.implementations;
 
-import com.repo.explorer.util.interfaces.URLBuilder;
+import com.repo.explorer.util.URLBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;

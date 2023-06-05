@@ -1,4 +1,4 @@
-package com.repo.explorer.service.interfaces;
+package com.repo.explorer.service;
 
 import com.repo.explorer.dto.GithubRepositoryDTO;
 

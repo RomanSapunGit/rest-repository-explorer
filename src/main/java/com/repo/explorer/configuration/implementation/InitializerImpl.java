@@ -1,6 +1,6 @@
-package com.repo.explorer.configuration.implementations;
+package com.repo.explorer.configuration.implementation;
 
-import com.repo.explorer.configuration.interfaces.Initializer;
+import com.repo.explorer.configuration.Initializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

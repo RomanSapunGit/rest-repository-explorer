@@ -12,7 +12,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @RestControllerAdvice
-public class ExceptionController {
+public class HandlerController {
 
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     public ResponseEntity<ResponseExceptionDTO> handleNotAcceptableException(HttpMediaTypeNotAcceptableException ex) {

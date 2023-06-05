@@ -1,4 +1,4 @@
-package com.repo.explorer.util.interfaces;
+package com.repo.explorer.util;
 
 import java.net.URI;
 
