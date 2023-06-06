@@ -1,4 +1,4 @@
-# REST Task
+# rest repository explorer
 
 ## Table of Contents
 - [Introduction](#introduction)
